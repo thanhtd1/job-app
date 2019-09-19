@@ -9,12 +9,22 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      task: [] // id, name, status
+      tasks: [] // id, name, status
+    }
+  }
+
+  componentWillMount() {
+    console.log('componentWillMount');
+    if(localStorage && localStorage.getItem('tasks')) {
+      let tasks = JSON.parse(localStorage.getItem('tasks'));
+      this.setState({
+        tasks: tasks
+      });
     }
   }
 
   onGenerateData = () => {
-    let task = [
+    let tasks = [
       {
         id: this.generateID(),
         name: 'thanhtd',
@@ -23,7 +33,7 @@ class App extends Component {
       {
         id: this.generateID(),
         name: 'manhtd',
-        status: true
+        status: false
       },
       {
         id: this.generateID(),
@@ -32,9 +42,10 @@ class App extends Component {
       }
     ]
     this.setState({
-      task: task
+      tasks: tasks
     });
-    console.log(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    console.log(tasks);
    
   }
 
@@ -47,6 +58,7 @@ class App extends Component {
   }
 
   render() {
+    const {tasks} = this.state;
     return (
       <div className="container">
         <div className="text-center">
@@ -68,7 +80,7 @@ class App extends Component {
                     Generate data
                 </button>
                 <Control/>
-                <TaskList tasklist={this.state.task}/>
+                <TaskList tasks={tasks}/>
             </div>
         </div>
     </div>

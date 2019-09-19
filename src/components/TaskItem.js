@@ -3,13 +3,12 @@ import React, { Component} from 'react';
 class TaskItem extends Component {
 
   render() {
-    let task = this.props.tasklist.map(
-        (task, index) => {
-          return <tr key={index}>
+          const {index, task} = this.props;
+          return ( <tr key={index}>
             <td>{task.id}</td>
             <td>{task.name}</td>
             <td className="text-center">
-              <span className="label label-success">
+              <span className={task.status===true ? "label label-success": "label label-danger"}>
                   {task.status===true ? 'Active' : 'Deactive'}
               </span>
             </td>
@@ -23,9 +22,9 @@ class TaskItem extends Component {
             </button>
         </td>
           </tr>
-        }
+       
     );
-    return task;
+   
   }
 }
 
